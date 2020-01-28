@@ -1,0 +1,20 @@
+Package: paulverse
+Title: All Paul's awesome R functions
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Paul",
+           family = "Perrin",
+           role = c("aut", "cre"),
+           email = "pauljeffreyperrin+paulverse@gmail.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: This package organizes and stores all of the great functions that I made.
+License: None
+Encoding: UTF-8
+LazyData: true
+Imports:
+	sqldf
+RoxygenNote: 7.0.2
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
