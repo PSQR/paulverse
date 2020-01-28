@@ -32,8 +32,6 @@ rs_by_var <- function(df, byvars, num){
 
 cal_to_fisc_per <- function(){
   
-  load(file = "/opt/R/R_project/pperrin/2020/SOP_Rebuild_w_Danny/Input_Data/inf_dt.Rda")
-  
   current_day <- as.data.frame(subset(inf_dt, as.Date(inf_dt$CLDR_DT) == Sys.Date()))
   
   return(gsub("-", "", current_day$FCL_YR_PER_C))
@@ -43,9 +41,7 @@ cal_to_fisc_per <- function(){
 #' cal.to.fisc.wk
 
 cal_to_fisc_wk <- function(){
-  
-  load(file = "/opt/R/R_project/pperrin/2020/SOP_Rebuild_w_Danny/Input_Data/inf_dt.Rda")
-  
+
   current_day <- as.data.frame(subset(inf_dt, as.Date(inf_dt$CLDR_DT) == Sys.Date()))
   
   return(current_day$FCL_WK_BGN_DT)
