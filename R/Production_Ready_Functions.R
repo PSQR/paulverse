@@ -52,14 +52,30 @@ cal_to_fisc_wk <- function(){
 
 save_time_stamped <- function(df, the_file_path, the_time_stamp){
   
-  save(df, file = the_file_path)
-  
   the_list <- unlist(strsplit(the_file_path, "\\."))
   
   directory <- the_list[1]
   
   extension <- the_list[2]
   
+  if (toupper(extension) == "RDS"){
+    
+    saveRDS(df, file = the_file_path)
+    
+    saveRDS(df, file = paste0(directory, "_", the_time_stamp, "." , extension))
+    
+  } else if(toupper(extension) == "RDA"){
+  
+  save(df, file = the_file_path)
+  
   save(df, file = paste0(directory, "_", the_time_stamp, "." , extension))
+  
+  } else if(toupper(extension) == "CSV"){
+    
+    write.csv(df, file = the_file_path)
+    
+    write.csv(df, file = paste0(directory, "_", the_time_stamp, "." , extension))
+    
+  }
   
 }
