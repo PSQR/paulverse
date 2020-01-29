@@ -1,6 +1,7 @@
 #' rs_by_var 
+#'
 #' This function takes a random sample of your data based on inputted by variables.  Requires SQLDF
-
+#'
 #' @param df the name of your dataframe
 #' @param byvars the by variables you wish to sample by
 #' @param num the number of samples to return
@@ -29,6 +30,11 @@ rs_by_var <- function(df, byvars, num){
 }
 
 #' cal_to_fisc_per
+#'
+#'This function returns current Steelcase fiscal period
+#'
+#'@return "YYYYMM"
+#'@export
 
 cal_to_fisc_per <- function(){
   
@@ -38,7 +44,12 @@ cal_to_fisc_per <- function(){
   
 }
 
-#' cal.to.fisc.wk
+#' cal_to_fisc_wk
+#'
+#'This function returns the beginning of the current Steelcase fiscal week
+#'
+#'@return "YYYY-mm-dd UTC"
+#'@export
 
 cal_to_fisc_wk <- function(){
 
@@ -48,7 +59,14 @@ cal_to_fisc_wk <- function(){
   
 }
 
-#' save.time.stamped
+#' save_time_stamped
+#'
+#' This function saves a time stamped version of your output data set, in addtion to the data set itself
+#'
+#' @param df the name of your dataframe
+#' @param the_file_path out file path
+#' @param the_time_stamp value to timestamp your output with
+#' @export
 
 save_time_stamped <- function(df, the_file_path, the_time_stamp){
   
