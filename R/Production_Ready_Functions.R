@@ -102,7 +102,7 @@ save_time_stamped <- function(df, the_file_path, the_time_stamp){
 #'
 #' This function returns whether or not it is the specified week of the fiscal period
 #'
-#' @param week week of fiscal period 
+#' @param week week of fiscal period (1, 2,3, or 4)
 #' @return 0 or 1
 #' @export
 
@@ -123,3 +123,70 @@ get_ver <- function(week){
   return(ver)
   
 }
+
+#' save_zip
+#'
+#' This function saves your output file as a zip file
+#'
+#' @param the_file output file you want to zip
+#' @export
+
+save_zip <- function(the_file){
+    
+    #print(the_file)
+    
+    the_list <- unlist(strsplit(the_file, "\\."))
+    
+    directory <- the_list[1]
+    
+    file <- the_list[2]
+    
+    system(paste0("zip ", directory, ".zip ", the_file))
+    
+    system(paste0("rm ", the_file))
+    
+  }
+  
+#' load_zip
+#'
+#' This function loads your output from a zip file
+#'
+#' @param the_file zipped output file you want to load
+#' @param extension the extension of the file once unzipped
+#' @export
+
+load_zip <- function(the_file, extension){
+    
+    the_list <- unlist(strsplit(the_file, "\\."))
+    
+    directory <- the_list[1]
+    
+    file <- the_list[2]
+    
+    the_list <- unlist(strsplit(directory, "/"))
+    
+    list_length <- length(the_list)
+    
+    directory_2 <- paste0("/",the_list[2],"/")
+    
+    for (i in 3:(list_length-1)){
+      
+      #print(i)
+      
+      directory_2 <- paste0(directory_2, the_list[i], "/")
+      
+    }
+    
+    system(paste0("unzip -j ", the_file, " -d ", directory_2))
+    
+    #load(paste0(directory, extension))
+    
+    #Sleeping for 1 second seems to work.  Using 5 just to be safe.
+    
+    system(paste0("(sleep 5; rm ", directory, extension, ")"), intern = FALSE, wait = FALSE)
+    
+    #print("Hello, World!")
+    
+    return(paste0(directory, extension))
+    
+  }

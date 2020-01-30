@@ -7,7 +7,7 @@
 get_ver(week)
 }
 \arguments{
-\item{week}{week of fiscal period}
+\item{week}{week of fiscal period (1, 2,3, or 4)}
 }
 \value{
 0 or 1
