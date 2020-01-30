@@ -97,3 +97,29 @@ save_time_stamped <- function(df, the_file_path, the_time_stamp){
   }
   
 }
+
+#' get_ver
+#'
+#' This function returns whether or not it is the specified week of the fiscal period
+#'
+#' @param week week of fiscal period 
+#' @return 0 or 1
+#' @export
+
+get_ver <- function(week){
+  
+  current_day <- as.data.frame(subset(inf_dt, as.Date(inf_dt$CLDR_DT) == Sys.Date()))
+  
+  if (current_day$FCL_WK_OF_PER_N == week){
+    
+    ver = 1
+    
+  } else{
+    
+    ver = 0
+    
+  }
+  
+  return(ver)
+  
+}

@@ -6,6 +6,9 @@
 \usage{
 cal_to_fisc_per()
 }
+\value{
+"YYYYMM"
+}
 \description{
-cal_to_fisc_per
+This function returns current Steelcase fiscal period
 }

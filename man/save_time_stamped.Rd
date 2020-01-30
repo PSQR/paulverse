@@ -2,10 +2,17 @@
 % Please edit documentation in R/Production_Ready_Functions.R
 \name{save_time_stamped}
 \alias{save_time_stamped}
-\title{save.time.stamped}
+\title{save_time_stamped}
 \usage{
 save_time_stamped(df, the_file_path, the_time_stamp)
 }
+\arguments{
+\item{df}{the name of your dataframe}
+
+\item{the_file_path}{out file path}
+
+\item{the_time_stamp}{value to timestamp your output with}
+}
 \description{
-save.time.stamped
+This function saves a time stamped version of your output data set, in addtion to the data set itself
 }

@@ -2,8 +2,7 @@
 % Please edit documentation in R/Production_Ready_Functions.R
 \name{rs_by_var}
 \alias{rs_by_var}
-\title{rs_by_var 
-This function takes a random sample of your data based on inputted by variables.  Requires SQLDF}
+\title{rs_by_var}
 \usage{
 rs_by_var(df, byvars, num)
 }
@@ -18,6 +17,5 @@ rs_by_var(df, byvars, num)
 subsetted dataframe
 }
 \description{
-rs_by_var 
 This function takes a random sample of your data based on inputted by variables.  Requires SQLDF
 }

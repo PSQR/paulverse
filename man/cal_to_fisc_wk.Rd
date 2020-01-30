@@ -2,10 +2,13 @@
 % Please edit documentation in R/Production_Ready_Functions.R
 \name{cal_to_fisc_wk}
 \alias{cal_to_fisc_wk}
-\title{cal.to.fisc.wk}
+\title{cal_to_fisc_wk}
 \usage{
 cal_to_fisc_wk()
 }
+\value{
+"YYYY-mm-dd UTC"
+}
 \description{
-cal.to.fisc.wk
+This function returns the beginning of the current Steelcase fiscal week
 }

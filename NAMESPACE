@@ -2,5 +2,6 @@
 
 export(cal_to_fisc_per)
 export(cal_to_fisc_wk)
+export(get_ver)
 export(rs_by_var)
 export(save_time_stamped)
