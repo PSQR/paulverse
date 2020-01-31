@@ -45,13 +45,13 @@ rs_by_var_2 <- function(df, byvars, num){
   
   df_2 <- df[,byvars]
   
-  unique(df_2)
+  df_3 <- unique(df_2)
   
-  df_3 <- df_2[sample(nrow(df_2), num), ]
+  df_4 <- df_3[sample(nrow(df_3), num), ]
   
-  df_4 <- inner_join(df, df_3)
+  df_5 <- inner_join(df, df_4)
   
-  return(df_4)
+  return(df_5)
   
 }
 
