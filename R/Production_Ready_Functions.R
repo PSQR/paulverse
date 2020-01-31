@@ -5,7 +5,8 @@
 #' @param df the name of your dataframe
 #' @param byvars the by variables you wish to sample by
 #' @param num the number of samples to return
-#' @return subsetted dataframe 
+#' @return subsetted dataframe
+#' rs_by_var(df = mtcars, byvars = "cyl, carb", num = 2)
 #' @export
 rs_by_var <- function(df, byvars, num){
 
@@ -26,6 +27,31 @@ rs_by_var <- function(df, byvars, num){
   temp_3 <- sqldf(paste0("SELECT * FROM fun_df JOIN temp_2 USING(", byvars, ")"))
   
   return(temp_3)
+  
+}
+
+#' rs_by_var_2 
+#'
+#' This function takes a random sample of your data based on inputted by variables.  Requires SQLDF
+#'
+#' @param df the name of your dataframe
+#' @param byvars the by variables you wish to sample by
+#' @param num the number of samples to return
+#' @return subsetted dataframe 
+#' @examples
+#' rs_by_var_2(df = mtcars, byvars = c("cyl", "carb"), num = 2)
+#' @export
+rs_by_var_2 <- function(df, byvars, num){
+  
+  df_2 <- df[,byvars]
+  
+  unique(df_2)
+  
+  df_3 <- df_2[sample(nrow(df_2), num), ]
+  
+  df_4 <- inner_join(df, df_3)
+  
+  return(df_4)
   
 }
 
