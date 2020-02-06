@@ -43,15 +43,21 @@ rs_by_var <- function(df, byvars, num){
 #' @export
 rs_by_var_2 <- function(df, byvars, num){
   
-  df_2 <- df[,byvars]
-  
-  df_3 <- unique(df_2)
-  
-  df_4 <- df_3[sample(nrow(df_3), num), ]
-  
-  df_5 <- inner_join(df, df_4)
-  
-  return(df_5)
+  df_2 <- as.data.frame(df[,byvars])
+    
+    if(length(byvars) < 2){
+      
+      names(df_2) <- byvars
+      
+    }
+    
+    df_3 <- unique(df_2)
+    
+    df_4 <- dplyr::sample_n(df_3, num)
+    
+    df_5 <- inner_join(df, df_4)
+    
+    return(df_5)
   
 }
 
