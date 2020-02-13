@@ -100,7 +100,7 @@ cal_to_fisc_wk <- function(){
 #' @param the_time_stamp value to timestamp your output with
 #' @export
 
-save_time_stamped <- function(df, the_file_path, the_time_stamp){
+save_time_stamped <- function(df, the_file_path, the_time_stamp, row.names = F){
   
   the_list <- unlist(strsplit(the_file_path, "\\."))
   
@@ -112,19 +112,19 @@ save_time_stamped <- function(df, the_file_path, the_time_stamp){
     
     saveRDS(df, file = the_file_path)
     
-    saveRDS(df, file = paste0(directory, "_", the_time_stamp, "." , extension))
+    saveRDS(df, file = paste0(directory, "_", the_time_stamp, "." , tolower(extension)))
     
   } else if(toupper(extension) == "RDA"){
-  
-  save(df, file = the_file_path)
-  
-  save(df, file = paste0(directory, "_", the_time_stamp, "." , extension))
-  
+    
+    save(df, file = the_file_path)
+    
+    save(df, file = paste0(directory, "_", the_time_stamp, "." , extension))
+    
   } else if(toupper(extension) == "CSV"){
     
-    write.csv(df, file = the_file_path)
+    write.csv(df, file = the_file_path, row.names = row.names)
     
-    write.csv(df, file = paste0(directory, "_", the_time_stamp, "." , extension))
+    write.csv(df, file = paste0(directory, "_", the_time_stamp, "." , tolower(extension)), row.names = row.names)
     
   }
   

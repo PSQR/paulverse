@@ -12,7 +12,8 @@ License: None
 Encoding: UTF-8
 LazyData: true
 Imports:
-	sqldf
+	sqldf,
+	dplyr
 RoxygenNote: 7.0.2
 Suggests: 
     knitr,
