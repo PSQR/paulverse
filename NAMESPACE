@@ -2,6 +2,7 @@
 
 export(cal_to_fisc_per)
 export(cal_to_fisc_wk)
+export(get_fisc_wk)
 export(get_ver)
 export(load_zip)
 export(rs_by_var)

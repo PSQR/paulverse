@@ -17,7 +17,7 @@ rs_by_var_2(df, byvars, num)
 subsetted dataframe
 }
 \description{
-This function takes a random sample of your data based on inputted by variables.  Requires SQLDF
+This function takes a random sample of your data based on inputted by variables.  Requires dplyr
 }
 \examples{
 rs_by_var_2(df = mtcars, byvars = c("cyl", "carb"), num = 2)

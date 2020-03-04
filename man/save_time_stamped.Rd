@@ -4,7 +4,7 @@
 \alias{save_time_stamped}
 \title{save_time_stamped}
 \usage{
-save_time_stamped(df, the_file_path, the_time_stamp)
+save_time_stamped(df, the_file_path, the_time_stamp, row.names = F)
 }
 \arguments{
 \item{df}{the name of your dataframe}
