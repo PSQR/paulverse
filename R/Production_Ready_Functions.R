@@ -223,14 +223,14 @@ load_zip <- function(the_file, extension){
 
 }
 
-#' get_ver
+#' get_fisc_wk
 #'
 #' This function returns current week of the fiscal period
 #'
 #' @return integer 1-5 current fiscal week of period
 #' @export
 
-get_fisc_wk <- function(week){
+get_fisc_wk <- function(){
 
   current_day <- as.data.frame(subset(inf_dt, as.Date(inf_dt$CLDR_DT) == Sys.Date()))
 
