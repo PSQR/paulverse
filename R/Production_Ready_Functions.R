@@ -1,4 +1,4 @@
-#' rs_by_var 
+#' rs_by_var
 #'
 #' This function takes a random sample of your data based on inputted by variables.  Requires SQLDF
 #'
@@ -11,54 +11,54 @@
 rs_by_var <- function(df, byvars, num){
 
   fun_df <- df
-  
+
   temp <- sqldf(paste0("
-                       
+
                        SELECT DISTINCT
-                       
-                       ", byvars, " 
-                       
+
+                       ", byvars, "
+
                        FROM fun_df
-                       
+
                        "))
-  
+
   temp_2 <- temp[sample(nrow(temp), num), ]
-  
+
   temp_3 <- sqldf(paste0("SELECT * FROM fun_df JOIN temp_2 USING(", byvars, ")"))
-  
+
   return(temp_3)
-  
+
 }
 
-#' rs_by_var_2 
+#' rs_by_var_2
 #'
-#' This function takes a random sample of your data based on inputted by variables.  Requires SQLDF
+#' This function takes a random sample of your data based on inputted by variables.  Requires dplyr
 #'
 #' @param df the name of your dataframe
 #' @param byvars the by variables you wish to sample by
 #' @param num the number of samples to return
-#' @return subsetted dataframe 
+#' @return subsetted dataframe
 #' @examples
 #' rs_by_var_2(df = mtcars, byvars = c("cyl", "carb"), num = 2)
 #' @export
 rs_by_var_2 <- function(df, byvars, num){
-  
+
   df_2 <- as.data.frame(df[,byvars])
-    
+
     if(length(byvars) < 2){
-      
+
       names(df_2) <- byvars
-      
+
     }
-    
+
     df_3 <- unique(df_2)
-    
+
     df_4 <- dplyr::sample_n(df_3, num)
-    
+
     df_5 <- inner_join(df, df_4)
-    
+
     return(df_5)
-  
+
 }
 
 #' cal_to_fisc_per
@@ -69,11 +69,11 @@ rs_by_var_2 <- function(df, byvars, num){
 #'@export
 
 cal_to_fisc_per <- function(){
-  
+
   current_day <- as.data.frame(subset(inf_dt, as.Date(inf_dt$CLDR_DT) == Sys.Date()))
-  
+
   return(gsub("-", "", current_day$FCL_YR_PER_C))
-  
+
 }
 
 #' cal_to_fisc_wk
@@ -86,9 +86,9 @@ cal_to_fisc_per <- function(){
 cal_to_fisc_wk <- function(){
 
   current_day <- as.data.frame(subset(inf_dt, as.Date(inf_dt$CLDR_DT) == Sys.Date()))
-  
+
   return(current_day$FCL_WK_BGN_DT)
-  
+
 }
 
 #' save_time_stamped
@@ -101,33 +101,33 @@ cal_to_fisc_wk <- function(){
 #' @export
 
 save_time_stamped <- function(df, the_file_path, the_time_stamp, row.names = F){
-  
+
   the_list <- unlist(strsplit(the_file_path, "\\."))
-  
+
   directory <- the_list[1]
-  
+
   extension <- the_list[2]
-  
+
   if (toupper(extension) == "RDS"){
-    
+
     saveRDS(df, file = the_file_path)
-    
+
     saveRDS(df, file = paste0(directory, "_", the_time_stamp, "." , tolower(extension)))
-    
+
   } else if(toupper(extension) == "RDA"){
-    
+
     save(df, file = the_file_path)
-    
+
     save(df, file = paste0(directory, "_", the_time_stamp, "." , extension))
-    
+
   } else if(toupper(extension) == "CSV"){
-    
+
     write.csv(df, file = the_file_path, row.names = row.names)
-    
+
     write.csv(df, file = paste0(directory, "_", the_time_stamp, "." , tolower(extension)), row.names = row.names)
-    
+
   }
-  
+
 }
 
 #' get_ver
@@ -139,21 +139,21 @@ save_time_stamped <- function(df, the_file_path, the_time_stamp, row.names = F){
 #' @export
 
 get_ver <- function(week){
-  
+
   current_day <- as.data.frame(subset(inf_dt, as.Date(inf_dt$CLDR_DT) == Sys.Date()))
-  
+
   if (current_day$FCL_WK_OF_PER_N == week){
-    
+
     ver = 1
-    
+
   } else{
-    
+
     ver = 0
-    
+
   }
-  
+
   return(ver)
-  
+
 }
 
 #' save_zip
@@ -164,21 +164,21 @@ get_ver <- function(week){
 #' @export
 
 save_zip <- function(the_file){
-    
+
     #print(the_file)
-    
+
     the_list <- unlist(strsplit(the_file, "\\."))
-    
+
     directory <- the_list[1]
-    
+
     file <- the_list[2]
-    
+
     system(paste0("zip ", directory, ".zip ", the_file))
-    
+
     system(paste0("rm ", the_file))
-    
+
   }
-  
+
 #' load_zip
 #'
 #' This function loads your output from a zip file
@@ -188,37 +188,52 @@ save_zip <- function(the_file){
 #' @export
 
 load_zip <- function(the_file, extension){
-    
+
     the_list <- unlist(strsplit(the_file, "\\."))
-    
+
     directory <- the_list[1]
-    
+
     file <- the_list[2]
-    
+
     the_list <- unlist(strsplit(directory, "/"))
-    
+
     list_length <- length(the_list)
-    
+
     directory_2 <- paste0("/",the_list[2],"/")
-    
+
     for (i in 3:(list_length-1)){
-      
+
       #print(i)
-      
+
       directory_2 <- paste0(directory_2, the_list[i], "/")
-      
+
     }
-    
+
     system(paste0("unzip -j ", the_file, " -d ", directory_2))
-    
+
     #load(paste0(directory, extension))
-    
+
     #Sleeping for 1 second seems to work.  Using 5 just to be safe.
-    
+
     system(paste0("(sleep 5; rm ", directory, extension, ")"), intern = FALSE, wait = FALSE)
-    
+
     #print("Hello, World!")
-    
+
     return(paste0(directory, extension))
-    
-  }
+
+}
+
+#' get_ver
+#'
+#' This function returns current week of the fiscal period
+#'
+#' @return integer 1-5 current fiscal week of period
+#' @export
+
+get_fisc_wk <- function(week){
+
+  current_day <- as.data.frame(subset(inf_dt, as.Date(inf_dt$CLDR_DT) == Sys.Date()))
+
+  return(as.integer(current_day$FCL_WK_OF_PER_N))
+
+}
