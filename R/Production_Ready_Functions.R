@@ -237,3 +237,80 @@ get_fisc_wk <- function(){
   return(as.integer(current_day$FCL_WK_OF_PER_N))
 
 }
+
+#' analyze_logs
+#'
+#' This function reads every txt of log file in directory and returns when the string "ERROR" was found
+#'
+#' @directory the name of your directory
+#' @return dataframe
+#' @examples
+#' tmp_df <- analyze_logs(directory = "/opt/R/R_project/pperrin/2020/SOE_Rebuild/Logs/202110_1/stderr/"))
+#' @export
+
+analyze_logs <- function(directory){
+
+  processFile = function(filepath) {
+
+    error_flag = 0
+
+    con = file(filepath, "r")
+    while ( TRUE ) {
+      line = readLines(con, n = 1)
+      if ( length(line) == 0 ) {
+        break
+      }
+
+      #print(toupper(toString(line)))
+
+      #print((grepl(toupper(toString(line)), "ERROR", fixed = TRUE) == T))
+
+      if((grepl(pattern = "ERROR", x = toupper(toString(line)), fixed = TRUE) == T) & (toString(nchar(line)) > 1)){
+
+        #print(paste0(file_list[i], " contains an error"))
+
+        error_flag = 1
+
+      }
+
+    }
+
+    close(con)
+
+    return(data.frame("Program" = file_list[i], "Error_Flag" = error_flag))
+
+  }
+
+  #processFile(filepath = 'D:\\temp\\temp_logs\\1_hst_style_week_stderr_2020_11_09_00_01.log')
+
+  #### Loop Through Logs ####
+
+  the_directory = directory
+
+  file_list = list.files(the_directory)
+
+  for (i in 1:length(file_list)){
+
+    #print(i)
+
+    #print(file_list[i])
+
+    #paste0(the_directory, file_list[i])
+
+    if(i == 1){
+
+      out_df <- processFile(filepath = paste0(the_directory, file_list[i]))
+
+    } else{
+
+      out_df <- bind_rows(out_df, processFile(filepath = paste0(the_directory, file_list[i])))
+
+    }
+
+    #processFile(filepath = paste0(the_directory, file_list[i]))
+
+  }
+
+  return(out_df)
+
+}
