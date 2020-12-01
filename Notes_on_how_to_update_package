@@ -1,0 +1,31 @@
+https://stackoverflow.com/questions/54259428/how-do-i-insert-a-new-function-into-my-r-package
+
+1
+
+Say you have written a new function called my_function
+
+my_function <- function(){
+  print("New function!")
+}
+You need to document it in the same R file. So your complete R file would look something like this
+
+#' my_function
+#' 
+#' A function to print the words "New function!"
+#'
+#' @return A character vector
+#' @export
+#'
+#' @examples
+#' my_function()
+
+my_function <- function(){
+  print("New function!")
+}
+Now save this file in your R/ directory in the package
+
+Run devtools::document() and that will update your man/ directory.
+
+You have now added a new function to your package
+
+In my opinion, the book R Packages is the best guide. You can read it for free at that link

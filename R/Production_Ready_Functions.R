@@ -242,7 +242,7 @@ get_fisc_wk <- function(){
 #'
 #' This function reads every txt of log file in directory and returns when the string "ERROR" was found
 #'
-#' @directory the name of your directory
+#' @param the name of your directory
 #' @return dataframe
 #' @examples
 #' tmp_df <- analyze_logs(directory = "/opt/R/R_project/pperrin/2020/SOE_Rebuild/Logs/202110_1/stderr/"))
