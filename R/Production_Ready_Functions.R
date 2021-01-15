@@ -314,3 +314,127 @@ analyze_logs <- function(directory){
   return(out_df)
 
 }
+
+#' per_error
+#'
+#' Computes percent error
+#'
+#' @param df the name of your df
+#' @param predict_var the name of your prediction
+#' @param actual_var the name of your actual
+#' @return dataframe
+#' @examples
+#' bckt_accrcy_02 <- per_error(df = bckt_accrcy_01, predict_var = predict, actual_var = SL_QT)
+#' @export
+
+per_error <- function(df, predict_var, actual_var){
+
+  df$predict_temp <- eval(substitute(predict_var), df)
+
+  df$actual_temp <- eval(substitute(actual_var), df)
+
+  temp_df <- df
+
+  temp_df$ERROR <- temp_df$predict_temp - temp_df$actual_temp
+
+  temp_df$ERROR_PCT <- temp_df$ERROR / temp_df$actual_temp
+
+  temp_df$ERROR_PCT <- ifelse(temp_df$actual_temp == 0 & abs(round(temp_df$predict_temp)) > 0, 1, temp_df$ERROR_PCT)
+
+  temp_df$ERROR_PCT <- ifelse(temp_df$actual_temp == 0 & abs(round(temp_df$predict_temp)) == 0, 0, temp_df$ERROR_PCT)
+
+  temp_df$predict_temp <- NULL
+
+  temp_df$actual_temp <- NULL
+
+  #Capping individual error at 100%
+
+  temp_df$ERROR_PCT <- ifelse(temp_df$ERROR_PCT > 1, 1, temp_df$ERROR_PCT)
+
+  return(temp_df)
+
+}
+
+#' cal_to_fisc_wk_bgn_dt
+#'
+#' returns begin date of current fiscal week
+#'
+#' @return string
+#' @examples
+#' cal_to_fisc_wk_bgn_dt()
+#' @export
+
+cal_to_fisc_wk_bgn_dt <- function ()
+{
+  current_day <- as.data.frame(subset(inf_dt, as.Date(inf_dt$CLDR_DT) ==
+                                        Sys.Date()))
+  return(gsub("-", "", current_day$FCL_WK_BGN_DT))
+}
+
+#' Chrctr_Crrnt_Dttme
+#'
+#' returns date time in a string seperated by underscores
+#'
+#' @return string
+#' @examples
+#' Chrctr_Crrnt_Dttme()
+#' @export
+
+Chrctr_Crrnt_Dttme <- function(){
+
+  date_time_str <- gsub('-','_',Sys.time())
+
+  date_time_str <- gsub(' ','_', date_time_str)
+
+  date_time_str <- gsub(':','_', date_time_str)
+
+  dt_format_NUM <- function(start_pos, stop_pos){
+
+    as.numeric(substr(date_time_str, start_pos, stop_pos))
+
+  }
+
+  dt_format_CHAR <- function(start_pos, stop_pos){
+
+    substr(date_time_str, start_pos, stop_pos)
+
+  }
+
+  return(paste0(dt_format_NUM(start_pos = 6, stop_pos = 7), "/",
+                dt_format_NUM(start_pos = 9, stop_pos = 10), "/",
+                dt_format_NUM(start_pos = 1, stop_pos = 4), " ",
+                dt_format_CHAR(start_pos = 12, stop_pos = 13), ":",
+                dt_format_CHAR(start_pos = 15, stop_pos = 16)))
+
+}
+
+##arrange df vars by position
+##'vars' must be a named vector, e.g. c("var.name"=1)
+arrange.vars <- function(data, vars){
+  ##stop if not a data.frame (but should work for matrices as well)
+  stopifnot(is.data.frame(data))
+
+  ##sort out inputs
+  data.nms <- names(data)
+  var.nr <- length(data.nms)
+  var.nms <- names(vars)
+  var.pos <- vars
+  ##sanity checks
+  stopifnot( !any(duplicated(var.nms)),
+             !any(duplicated(var.pos)) )
+  stopifnot( is.character(var.nms),
+             is.numeric(var.pos) )
+  stopifnot( all(var.nms %in% data.nms) )
+  stopifnot( all(var.pos > 0),
+             all(var.pos <= var.nr) )
+
+  ##prepare output
+  out.vec <- character(var.nr)
+  out.vec[var.pos] <- var.nms
+  out.vec[-var.pos] <- data.nms[ !(data.nms %in% var.nms) ]
+  stopifnot( length(out.vec)==var.nr )
+
+  ##re-arrange vars by position
+  data <- data[ , out.vec]
+  return(data)
+}
