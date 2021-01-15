@@ -2,10 +2,21 @@
 % Please edit documentation in R/Production_Ready_Functions.R
 \name{arrange.vars}
 \alias{arrange.vars}
-\title{vars' must be a named vector, e.g. c("var.name"=1)}
+\title{arrange.vars}
 \usage{
-arrange.vars(data, vars)
+\method{arrange}{vars}(data, vars)
+}
+\arguments{
+\item{data}{the name of your df}
+
+\item{vars}{the names of your variables}
+}
+\value{
+df
 }
 \description{
-vars' must be a named vector, e.g. c("var.name"=1)
+returns date time in a string seperated by underscores
+}
+\examples{
+bckt_intl_bckt_frcsts <- arrange.vars(data = forecasts_2, vars = c("RGN" = 1,"P_STYL_CD" = 2,"PLNT_CD" = 3))
 }

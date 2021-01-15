@@ -408,8 +408,17 @@ Chrctr_Crrnt_Dttme <- function(){
 
 }
 
-##arrange df vars by position
-##'vars' must be a named vector, e.g. c("var.name"=1)
+#' arrange.vars
+#'
+#' returns date time in a string seperated by underscores
+#' @param data the name of your df
+#' @param vars the names of your variables
+#' @return df
+#' @examples
+#' bckt_intl_bckt_frcsts <- arrange.vars(data = forecasts_2, vars = c("RGN" = 1,"P_STYL_CD" = 2,"PLNT_CD" = 3))
+#' @export
+#'
+
 arrange.vars <- function(data, vars){
   ##stop if not a data.frame (but should work for matrices as well)
   stopifnot(is.data.frame(data))
