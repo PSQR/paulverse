@@ -419,7 +419,7 @@ Chrctr_Crrnt_Dttme <- function(){
 #' @export
 #'
 
-arrange.vars <- function(data, vars){
+arrange_vars <- function(data, vars){
   ##stop if not a data.frame (but should work for matrices as well)
   stopifnot(is.data.frame(data))
 
