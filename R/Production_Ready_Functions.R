@@ -371,6 +371,22 @@ cal_to_fisc_wk_bgn_dt <- function ()
   return(gsub("-", "", current_day$FCL_WK_BGN_DT))
 }
 
+#' cal_to_fisc_wk_end_dt
+#'
+#' returns begin date of current fiscal week
+#'
+#' @return string
+#' @examples
+#' cal_to_fisc_wk_end_dt()
+#' @export
+
+cal_to_fisc_wk_end_dt <- function ()
+{
+  current_day <- as.data.frame(subset(inf_dt, as.Date(inf_dt$CLDR_DT) ==
+                                        Sys.Date() + 7))
+  return(gsub("-", "", current_day$FCL_WK_BGN_DT))
+}
+
 #' Chrctr_Crrnt_Dttme
 #'
 #' returns date time in a string seperated by underscores
