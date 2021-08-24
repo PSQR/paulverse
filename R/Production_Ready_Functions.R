@@ -463,3 +463,48 @@ arrange_vars <- function(data, vars){
   data <- data[ , out.vec]
   return(data)
 }
+
+#' process_CSP_Override
+#'
+#' This code is used in both the components forecasting and S&OE AMER.
+#' @examples
+#' csp_final <- process_CSP_Override()
+#' @export
+#'
+
+process_CSP_Override <- function(){
+
+  #This code is used in both the components forecasting and S&OE AMER.
+
+  if(nrow(CSP_OVERRIDE) > 0){
+
+    out_df <- left_join(csp_init_01, CSP_OVERRIDE, by = c("material_code", "Fiscal_Period"))
+
+    names(out_df)[names(out_df) == 'Override / Lift / Percentage'] <- 'Override_Lift_Percentage'
+
+    names(out_df)[names(out_df) == 'FINAL_QTY'] <- 'Final_Qty'
+
+    out_df$Override_Lift_Percentage <- ifelse(is.na(out_df$Override_Lift_Percentage), "DO_NOTHING", out_df$Override_Lift_Percentage)
+
+    out_df$Final_Qty <- ifelse(toupper(out_df$Override_Lift_Percentage) ==  "LIFT", out_df$Final_Qty + out_df$`CSP Current Plan`, out_df$Final_Qty)
+
+    out_df$Final_Qty <- ifelse(toupper(out_df$Override_Lift_Percentage) ==  "OVERRIDE", out_df$`CSP Current Plan`, out_df$Final_Qty)
+
+    out_df$Final_Qty <- ifelse(toupper(out_df$Override_Lift_Percentage) ==  "PERCENTAGE", (out_df$`CSP Current Plan`* out_df$Final_Qty)+ (out_df$Final_Qty), out_df$Final_Qty)
+
+    write_csv(out_df, "/opt/sasshare/Projects_Folders/SOP_Files/SP_Data/Manual_CSP_adjustments_PROCESSED.csv")
+
+    out_df$ROW_COUNT <- NULL
+
+    out_df$`CSP Current Plan` <- NULL
+
+  }else{
+
+    print("No data in CSP_OVERRIDE file")
+
+    out_df <- csp_init_01
+
+  }
+
+}
+
