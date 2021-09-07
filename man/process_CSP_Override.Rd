@@ -4,11 +4,17 @@
 \alias{process_CSP_Override}
 \title{process_CSP_Override}
 \usage{
-process_CSP_Override()
+process_CSP_Override(forecast_type)
+}
+\arguments{
+\item{forecast_type}{either COMP or CDW}
+}
+\value{
+df
 }
 \description{
 This code is used in both the components forecasting and S&OE AMER.
 }
 \examples{
-csp_final <- process_CSP_Override()
+csp_final <- process_CSP_Override(forecast_type = "COMP")
 }

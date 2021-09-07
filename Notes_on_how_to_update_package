@@ -24,9 +24,13 @@ my_function <- function(){
 }
 Now save this file in your R/ directory in the package
 
+cd to package directory
+
 Run devtools::document() and that will update your man/ directory.
 
 You have now added a new function to your package
+
+now update with GIT
 
 In my opinion, the book R Packages is the best guide. You can read it for free at that link
 
