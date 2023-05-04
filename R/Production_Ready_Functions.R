@@ -505,3 +505,26 @@ process_CSP_Override <- function(forecast_type) {
   return(out_df)
 
 }
+
+#' better_summary
+#'
+#' It's just a better summary
+#' @param df your dataframe
+#' @examples
+#' mtcars %>% better_summary()
+#' @export
+#'
+
+better_summary <- function(df){
+  
+  temp_df <- df
+  
+  char_cols <- sapply(df, is.character)
+  
+  temp_df[char_cols] <- lapply(temp_df[char_cols], as.factor)
+  
+  print(paste("nrow", temp_df %>% nrow()))
+  
+  return(summary(temp_df))
+  
+}
