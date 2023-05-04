@@ -10,7 +10,7 @@ my_function <- function(){
 You need to document it in the same R file. So your complete R file would look something like this
 
 #' my_function
-#' 
+#'
 #' A function to print the words "New function!"
 #'
 #' @return A character vector
@@ -34,6 +34,8 @@ now update with GIT
 
 In my opinion, the book R Packages is the best guide. You can read it for free at that link
 
-run this to update package 
+run this to update package
 
 #devtools::install_github("psqr/paulverse")
+
+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
