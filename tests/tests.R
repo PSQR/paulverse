@@ -25,6 +25,8 @@ inf_dt$FCL_PER_OF_YR_C <- as.character(inf_dt$FCL_PER_OF_YR_C)
 
 inf_dt$FCL_PER_OF_YR_C <- ifelse(nchar(inf_dt$FCL_PER_OF_YR_C)==1,paste0("0",inf_dt$FCL_PER_OF_YR_C),inf_dt$FCL_PER_OF_YR_C)
 
+inf_dt$FCL_WK_OF_PER_C <- as.character(inf_dt$FCL_WK_OF_PER_C)
+
 #### Test functions locally ####
 
 source("/opt/R/R_project/pperrin/paulverse/R/Production_Ready_Functions.R")
