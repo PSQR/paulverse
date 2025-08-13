@@ -3,15 +3,42 @@
 library(readr)
 library(dplyr)
 
+#### Save CSV file to RDA file ####
+
+update_inf_dt <- function(fp){
+
+  #save a date stamped copy of current inf_dt
+
+  load("/opt/R/R_project/pperrin/paulverse/data/inf_dt.rda")
+  save(inf_dt, file=paste0("/opt/R/R_project/pperrin/paulverse/MISC/inf_dt_", Sys.time(), ".rda"))
+
+}
+
+update_inf_dt()
+
 #### Load your new inf_dt to test ####
 
 #load("/opt/R/R_project/pperrin/paulverse/data/inf_dt.rda")
 
-load("/opt/R/R_project/pperrin/inf_dt.rda")
+load("/opt/R/R_project/pperrin/inf_dt_2025_08_13.rda")
 
 inf_dt_old <- inf_dt
 
-inf_dt <- read_csv("/opt/R/R_project/pperrin/inf_dt_test_2024_07_29.csv")
+inf_dt <- read_csv("/opt/R/R_project/pperrin/inf_dt_thru_2100.csv")
+
+#### add missing var ####
+
+inf_dt_tmp <- inf_dt %>%
+  arrange(CLDR_DT) %>%
+  select(FCL_WK_BGN_DT, FCL_YR_PER_C) %>%
+  group_by(FCL_YR_PER_C, FCL_WK_BGN_DT) %>%
+  summarise(n = n())  %>%
+  select(-n) %>%
+  mutate(FCL_WK_OF_PER_C = as.character(row_number())) %>%
+  ungroup()
+
+inf_dt <- inf_dt %>%
+  left_join(inf_dt_tmp, by = join_by(FCL_WK_BGN_DT, FCL_YR_PER_C))
 
 #### Manipulate new inf_dt so that it passes tests ####
 
@@ -155,7 +182,7 @@ summary(inf_dt_old$FCL_PER_OF_YR_N)
 
 #save old copy
 
-save(inf_dt_old,file = paste0("/opt/R/R_project/pperrin/", "inf_dt_backup_", Sys.Date(), "rda"), compress = T)
+save(inf_dt_old,file = paste0("/opt/R/R_project/pperrin/", "inf_dt_backup_", Sys.Date(), "rds"))
 
 #save new inf_dt
 
