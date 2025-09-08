@@ -2,6 +2,7 @@
 
 library(readr)
 library(dplyr)
+library(testthat)
 
 #### Save CSV file to RDA file ####
 
@@ -150,6 +151,13 @@ cal_to_fisc_wk_end_dt_OLD <- function ()
 cal_to_fisc_wk_end_dt_OLD()
 
 ##### Run Tests ####
+
+inf_dt <- inf_dt %>%
+  arrange(CLDR_DT)
+
+test_that("df is sorted in ascending order by column x", {
+  expect_true(all(diff(inf_dt$CLDR_DT) >= 0))
+})
 
 cal_to_fisc_per()==cal_to_fisc_per_OLD()
 
