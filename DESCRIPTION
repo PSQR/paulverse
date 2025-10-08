@@ -1,6 +1,6 @@
 Package: paulverse
 Title: All Paul's awesome R functions
-Version: 0.0.0.9000
+Version: 0.0.1.0000
 Authors@R: 
     person(given = "Paul",
            family = "Perrin",
@@ -11,9 +11,6 @@ Description: This package organizes and stores all of the great functions that I
 License: None
 Encoding: UTF-8
 LazyData: true
-Imports:
-	sqldf,
-	dplyr
 RoxygenNote: 7.2.3
 Suggests: 
     knitr,
