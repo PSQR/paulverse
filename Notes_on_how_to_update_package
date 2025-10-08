@@ -37,3 +37,5 @@ In my opinion, the book R Packages is the best guide. You can read it for free a
 run this to update package
 
 #devtools::install_github("psqr/paulverse")
+
+Note 2025/09/08: Making repo private for security.  If you need to update in the future go to github and make the repo public

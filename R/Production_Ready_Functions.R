@@ -1,35 +1,3 @@
-#' rs_by_var
-#'
-#' This function takes a random sample of your data based on inputted by variables.  Requires SQLDF
-#'
-#' @param df the name of your dataframe
-#' @param byvars the by variables you wish to sample by
-#' @param num the number of samples to return
-#' @return subsetted dataframe
-#' rs_by_var(df = mtcars, byvars = "cyl, carb", num = 2)
-#' @export
-rs_by_var <- function(df, byvars, num){
-
-  fun_df <- df
-
-  temp <- sqldf(paste0("
-
-                       SELECT DISTINCT
-
-                       ", byvars, "
-
-                       FROM fun_df
-
-                       "))
-
-  temp_2 <- temp[sample(nrow(temp), num), ]
-
-  temp_3 <- sqldf(paste0("SELECT * FROM fun_df JOIN temp_2 USING(", byvars, ")"))
-
-  return(temp_3)
-
-}
-
 #' rs_by_var_2
 #'
 #' This function takes a random sample of your data based on inputted by variables.  Requires dplyr
@@ -516,15 +484,15 @@ process_CSP_Override <- function(forecast_type) {
 #'
 
 better_summary <- function(df){
-  
+
   temp_df <- df
-  
+
   char_cols <- sapply(df, is.character)
-  
+
   temp_df[char_cols] <- lapply(temp_df[char_cols], as.factor)
-  
+
   print(paste("nrow", temp_df %>% nrow()))
-  
+
   return(summary(temp_df))
-  
+
 }
